@@ -32,6 +32,35 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/_expo/static/js/web/index-32b37da66c4b52ed126332a4bf181902.js" defer></script>
+  
+  <!-- Main script with fallback for GitHub Pages -->
+  <script>
+    // Try to load the script with the normal path
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.defer = true;
+        script.onload = resolve;
+        script.onerror = () => {
+          console.warn('Failed to load script:', src);
+          reject();
+        };
+        document.body.appendChild(script);
+      });
+    }
+    
+    // First try the relative path
+    loadScript('./_expo/static/js/web/index-32b37da66c4b52ed126332a4bf181902.js')
+      .catch(() => {
+        // If that fails, try the GitHub Pages path
+        console.log('Trying GitHub Pages path as fallback...');
+        return loadScript('https://shermozle.github.io/contractorpermie-vibe/_expo/static/js/web/index-32b37da66c4b52ed126332a4bf181902.js');
+      })
+      .catch(() => {
+        console.error('All script loading attempts failed');
+        document.body.innerHTML += '<div style="color:red;padding:20px;">Failed to load application scripts. Please try refreshing the page.</div>';
+      });
+  </script>
 </body>
 </html>
