@@ -1,37 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>contractorpermie-vibe</title>
-    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
-    <style id="expo-reset">
-      /* These styles make the body full-height */
-      html,
-      body {
-        height: 100%;
-      }
-      /* These styles disable body scrolling if you are using <ScrollView> */
-      body {
-        overflow: hidden;
-      }
-      /* These styles make the root element full-height */
-      #root {
-        display: flex;
-        height: 100%;
-        flex: 1;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract or Permie</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #1C1C1E;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #0A84FF;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .description {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .card {
+            background-color: #2C2C2E;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            background-color: #3A3A3C;
+            border: 1px solid #48484A;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+        }
+        .helper-text {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+        .tab-bar {
+            display: flex;
+            background-color: #2C2C2E;
+            border-top: 1px solid #38383A;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+        }
+        .tab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8E8E93;
+            padding: 8px;
+        }
+        .tab.active {
+            color: #0A84FF;
+            border-top: 2px solid #0A84FF;
+        }
+        .tab-icon {
+            margin-bottom: 4px;
+            font-size: 24px;
+        }
+        .tab-label {
+            font-size: 12px;
+        }
     </style>
-  <link rel="shortcut icon" href="/favicon.ico" /></head>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="icon">🧮</div>
+                <div class="title">Contract or Permie</div>
+            </div>
+            
+            <div class="description">
+                This calculator helps you compare "package" or "gross" salaries, daily contract rates and their equivalent standard salary number.
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Contractor Rate</div>
+                <div class="input-group">
+                    <label for="dayRate">Day Rate</label>
+                    <input type="number" id="dayRate" placeholder="Enter day rate">
+                    <div class="helper-text">Based on 219 billable days per year (5 days/week)</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Permanent Salary</div>
+                <div class="input-group">
+                    <label for="baseSalary">Base Salary (excl. super)</label>
+                    <input type="number" id="baseSalary" placeholder="Enter base salary">
+                </div>
+                
+                <div class="input-group">
+                    <label for="packageSalary">Package (incl. super)</label>
+                    <input type="number" id="packageSalary" placeholder="Enter package salary">
+                    <div class="helper-text">Includes 11.5% superannuation</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <body>
-    <!-- Use static rendering with Expo Router to support running without JavaScript. -->
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <!-- The root element for your Expo app. -->
-    <div id="root"></div>
-  <script src="/_expo/static/js/web/index-32b37da66c4b52ed126332a4bf181902.js" defer></script>
+    <div class="tab-bar">
+        <div class="tab active">
+            <div class="tab-icon">🧮</div>
+            <div class="tab-label">Calculator</div>
+        </div>
+        <div class="tab">
+            <div class="tab-icon">⚙️</div>
+            <div class="tab-label">Settings</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // This is a simple placeholder version of your calculator
+            // Default settings
+            const settings = {
+                annualLeave: 20,
+                sickLeave: 10,
+                publicHolidays: 11,
+                superRate: 11.5,
+                daysPerWeek: 5
+            };
+            
+            const dayRateInput = document.getElementById('dayRate');
+            const baseSalaryInput = document.getElementById('baseSalary');
+            const packageSalaryInput = document.getElementById('packageSalary');
+            
+            // Calculate working days
+            const workingDaysInYear = 52 * settings.daysPerWeek;
+            const billableDays = workingDaysInYear - settings.annualLeave - settings.sickLeave - settings.publicHolidays;
+            
+            // Update helper text
+            document.querySelector('.helper-text').textContent = `Based on ${billableDays} billable days per year (${settings.daysPerWeek} days/week)`;
+            
+            // Day rate to salary conversion
+            dayRateInput.addEventListener('input', function() {
+                const dayRate = parseFloat(this.value) || 0;
+                const annualBillable = dayRate * billableDays;
+                const superAmount = (annualBillable * settings.superRate) / 100;
+                const packageAmount = annualBillable + superAmount;
+                
+                baseSalaryInput.value = Math.round(annualBillable);
+                packageSalaryInput.value = Math.round(packageAmount);
+            });
+            
+            // Base salary to day rate conversion
+            baseSalaryInput.addEventListener('input', function() {
+                const baseSalary = parseFloat(this.value) || 0;
+                const dayRate = baseSalary / billableDays;
+                const packageAmount = baseSalary * (1 + settings.superRate / 100);
+                
+                dayRateInput.value = Math.round(dayRate);
+                packageSalaryInput.value = Math.round(packageAmount);
+            });
+            
+            // Package salary to day rate conversion
+            packageSalaryInput.addEventListener('input', function() {
+                const packageSalary = parseFloat(this.value) || 0;
+                const baseSalary = packageSalary / (1 + settings.superRate / 100);
+                const dayRate = baseSalary / billableDays;
+                
+                dayRateInput.value = Math.round(dayRate);
+                baseSalaryInput.value = Math.round(baseSalary);
+            });
+        });
+    </script>
 </body>
 </html>
