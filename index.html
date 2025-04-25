@@ -32,21 +32,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  
-  <script>
-    // Check if we're running on GitHub Pages and use the correct path
-    const scriptName = "index-32b37da66c4b52ed126332a4bf181902.js";
-    const script = document.createElement('script');
-    
-    // GitHub Pages path structure is different, we need the repo name in the path
-    if (location.hostname === 'shermozle.github.io') {
-      script.src = "/contractorpermie-vibe/_expo/static/js/web/" + scriptName;
-    } else {
-      script.src = "./_expo/static/js/web/" + scriptName;
-    }
-    
-    script.defer = true;
-    document.body.appendChild(script);
-  </script>
+  <script src="/_expo/static/js/web/index-32b37da66c4b52ed126332a4bf181902.js" defer></script>
 </body>
 </html>
